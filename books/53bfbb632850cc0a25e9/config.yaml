@@ -1,6 +1,6 @@
-title: ""
-summary: ""
-topics: []
+title: "Customizing Angular Material"
+summary: "Angular Material を正しくカスタマイズして利用する方法を解説します。"
+topics: ["Angular", "angularmaterial", "angularcdk"]
 published: false
 price: 0 # 有料の場合200〜5000
 # 本に含めるチャプターを順番に並べましょう
