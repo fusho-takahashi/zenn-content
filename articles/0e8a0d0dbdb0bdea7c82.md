@@ -3,12 +3,12 @@ title: "Angular SSR on Cloudflare Pages + Hono で tRPC を体感しよう！"
 emoji: "🔥"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["Angular", "Cloudflare", "Hono"]
-published: false
+published: true
 ---
 
 tRPC を体感してみたかったので、今回は Hono の RPC モードを使ってみました。
 
-今回のサンプリコードはこちらです。
+サンプリコードはこちらです。
 
 https://github.com/fusho-takahashi/ng-cfp-rpc
 
@@ -37,7 +37,7 @@ npm create cloudflare@latest
 ╰ Continue with Angular via `npx @angular/cli@16.2.2 new ng-cfp-rpc --standalone`
 ```
 
-Angular 最新でしかも standalone フラグを書いてくれているところに好感を持てますね！
+Angular が最新で、しかも standalone フラグを書いてくれているところに好感を持てますね！
 このあと Step 2 で SSR や Cloudflare Pages の設定もしてくれます。
 最後に Step 3 では Cloudflare Pages に deploy するか聞かれるのですが、今回は tRPC を体験したいだけなので `No` にしました。
 
@@ -61,7 +61,7 @@ import { Hono } from 'hono';
 export const apiApp = new Hono();
 
 const apiRoute = apiApp.get('/title', (c) => {
-  return c.jsonT({ title: 'Hono RPC mode' });
+  return c.jsonT({ title: 'Hono RPC Mode' });
 });
 
 export type ApiRoute = typeof apiRoute;
@@ -72,7 +72,7 @@ Pages Functions の実装は、 `c.jsonT()` で値を返し、`apiRoute` の型�
 
 ## Angular から Pages Functions にアクセスできるようにする
 
-現状すべてのパスを Angular でハンドルしてしまうので、せっかく作った API にアクセスすることができません。 `main.server.ts` を変更して、`/api` から始まる URL は Hono でハンドルできるようにします。
+現状すべてのパスを Angular がハンドルしてしまうので、せっかく作った API にアクセスすることができません。 `main.server.ts` を変更して、`/api` から始まる URL は Hono でハンドルできるようにします。
 
 ```diff ts:main.server.ts
 
@@ -97,7 +97,7 @@ Pages Functions の実装は、 `c.jsonT()` で値を返し、`apiRoute` の型�
 ## Angular で API をコールする
 
 ついに Angular から API をコールする準備ができました！早速試してみましょう！
-今回いつも使ってる HttpClient は使いません。代わりに Hono の client を作成します。
+今回いつも使ってる HttpClient は使いません。代わりに Hono の client 使いますので、まずは作成します。
 
 ```ts:app.component.ts
 @Component({
@@ -125,7 +125,7 @@ async ngOnInit() {
 
 ![プロパティがコード補完される様子](/images/IntelliSense_property.png)
 
-URL のパスや、レスポンスのプロパティのコード補完が聞いています！感動！
+URL のパスや、レスポンスのプロパティでコード補完が聞いています！感動！
 
 そして `npm start` してみると、きちんと表示が変わっています。
 
@@ -133,8 +133,7 @@ URL のパスや、レスポンスのプロパティのコード補完が聞い�
 
 ## おわりに
 
-無事 tRPC を体感することができましたね！今回はやっていないですが、post の場合は body のコード補完もきちんと
-効きますし、開発体験バク上がり間違いなしです！
+無事 tRPC を体感することができましたね！今回はやっていないですが、post の場合は body のコード補完もきちんと効きますし、開発体験バク上がり間違いなしです！
 さらに Cloudflare D1 と繋げばフロントエンドからバックエンドから DB まで、まさにオールインワンな構成を実現できます。そちらの記事も近いうちに書きたいと思っておりますので、お楽しみに！
 
 みなさんもぜひ tRPC を体験してみてください！
